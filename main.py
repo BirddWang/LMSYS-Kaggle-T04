@@ -97,7 +97,7 @@ base_model = Gemma2ForSequenceClassification.from_pretrained(
     dtype=torch.bfloat16,
     device_map="auto",
 )
-if os.path.exists(config.lora_dir):
+if config.lora_dir is not None:
     print("Loading LoRA weights from:", config.lora_dir)
     model = PeftModel.from_pretrained(
         base_model,
