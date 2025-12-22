@@ -21,6 +21,8 @@ from sklearn.metrics import log_loss, accuracy_score
 
 @dataclass
 class Config:
+    train_data: str = "./data/cleaned_pre_train.csv"
+
     lora_dir: str = "output-pretrain/checkpoint-5239"
     output_dir: str = "output-has-pretrain"
     checkpoint: str = "unsloth/gemma-2-9b-it-bnb-4bit"  # 4-bit quantized gemma-2-9b-instruct
@@ -111,7 +113,7 @@ else:
     model = get_peft_model(base_model, lora_config)
 model.print_trainable_parameters()
 
-ds = Dataset.from_csv("./data/cleaned_pre_train.csv")
+ds = Dataset.from_csv(config.train_data)
 
 class CustomTokenizer:
     def __init__(
